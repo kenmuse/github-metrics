@@ -1,0 +1,2 @@
+PyJWT=2.10.0
+cryptography=44.0.2
