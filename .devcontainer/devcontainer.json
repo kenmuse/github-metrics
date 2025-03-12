@@ -12,5 +12,9 @@
             }
         }
     },
-    "postCreateCommand": "pip install --user -r requirements.txt"
+    "postCreateCommand": "pip install --upgrade pip",
+    "postStartCommand":  "pip install --user -r requirements.txt",
+    "features": {
+        "ghcr.io/devcontainers/features/github-cli:1": {}
+    }
 }

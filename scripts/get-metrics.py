@@ -11,21 +11,21 @@ import urllib.request
 
 def parse_args():
   parser = argparse.ArgumentParser(description='Retrieve metrics from the Copilot Usage API using a GitHub App or PAT')
-  parser.add_argument('org', help='Organization to query')
+  parser.add_argument('org', help='Organization to query', default=os.environ.get('GH_ORG'))
   parser.add_argument('-v', '--verbose', help='Additional logging of method calls (contains sensitive data)',
                       action='store_true')
   app_group = parser.add_argument_group('GitHub App', 'Arguments for configuring a GitHub App')
-  app_group.add_argument('-p', '--pem_file', dest='pem_file', metavar='PATH', help='Path to the PEM file')
-  app_group.add_argument('-c', '--client_id', dest='client_id', metavar='ID', help='Client ID (or App ID) for the GitHub App', type=str)
+  app_group.add_argument('-p', '--pem_file', dest='pem_file', metavar='PATH', help='Path to the PEM file', default=os.environ.get('GH_PEM_PATH'))
+  app_group.add_argument('-c', '--client_id', dest='client_id', metavar='ID', help='Client ID (or App ID) for the GitHub App', type=str, default=os.environ.get('GH_APP_ID'))
 
   pat_group = parser.add_argument_group('Personal Access Token', 'Arguments for configuring a Personal Access Token')
   pat_group.add_argument('-t', '--token', help='Organization name')
 
+  args = parser.parse_args()
   if len(sys.argv)==1:
     parser.print_help(sys.stderr)
     sys.exit(1)
 
-  args = parser.parse_args()
   logging.basicConfig(level=logging.DEBUG if args.verbose else logging.WARNING)
 
   if args.token and (args.pem_file or args.client_id):
