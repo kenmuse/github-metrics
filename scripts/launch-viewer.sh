@@ -1,0 +1,1 @@
+docker run --rm --name metrics-viewer --platform linux/amd64 -p 8080:80 -e NUXT_PUBLIC_SCOPE=organization -e NUXT_PUBLIC_GITHUB_ORG=kenmuse-org -e NUXT_GITHUB_TOKEN=$(gh auth token) ghcr.io/github-copilot-resources/copilot-metrics-viewer:latest
