@@ -88,14 +88,11 @@ def create_encoded_jwt(pem, client_id):
   # Create JWT
   encoded_jwt = jwt.encode(payload, signing_key, algorithm='RS256')
   
-  logging.debug(f'JWT: {encoded_jwt}')
-  logging.debug(f'Len: {len(encoded_jwt)}')
   return encoded_jwt
 
 def get_access_token(encoded_jwt, installation_id):
   with invoke_json_api(f'https://api.github.com/app/installations/{installation_id}/access_tokens', encoded_jwt, 'POST') as response:
     data = json.load(response)
-    logging.debug(f'Access token data: {data}')
     token = data['token']
     return token
   
